@@ -1,3 +1,58 @@
+const host = 'm6.wqtt.ru'; // Замените на хост WQTT
+const port = 18722; // Порт MQTT
+const clientId = 'web-client-' + Math.random().toString(16).substr(2, 8);
+const username = 'u_70J5WQ'; // Логин (если требуется)
+const password = 'lX8qS4zx'; // Пароль (если требуется)
+
+const client = new Paho.MQTT.Client(host, port, clientId);
+
+client.onConnectionLost = (responseObject) => {
+    console.error('Соединение потеряно:', responseObject.errorMessage);
+};
+
+client.onMessageArrived = (message) => {
+    console.log('Получено сообщение:', message.payloadString);
+
+    const topic = message.destinationName;
+    const payload = JSON.parse(message.payloadString); // Если данные в формате JSON
+
+    switch (topic) {
+        case 'smart-home/temperature':
+            document.getElementById('temperature').innerText = `Температура: ${payload.value}°C`;
+            break;
+        case 'smart-home/humidity':
+            document.getElementById('humidity').innerText = `Влажность: ${payload.value}%`;
+            break;
+        case 'smart-home/motion':
+            document.getElementById('motion').innerText = `Движение: ${payload.value ? 'Обнаружено' : 'Нет'}`;
+            break;
+        case 'smart-home/leak':
+            document.getElementById('leak').innerText = `Протечка: ${payload.value}%`;
+            break;
+        case 'smart-home/gas': // Новый топик для датчика газа
+            document.getElementById('gas').innerText = `Газ: ${payload.value} ppm`;
+            break;
+        default:
+            console.warn('Неизвестный топик:', topic);
+    }
+};
+
+client.connect({
+    onSuccess: () => {
+        console.log('Подключено к WQTT');
+        // Подписка на топики
+        client.subscribe('smart-home/temperature');
+        client.subscribe('smart-home/humidity');
+        client.subscribe('smart-home/motion');
+        client.subscribe('smart-home/leak');
+        client.subscribe('smart-home/gas'); // Подписка на топик газа
+    },
+    onFailure: (err) => {
+        console.error('Ошибка подключения:', err.errorMessage);
+    },
+    userName: username,
+    password: password,
+});
 // Состояние приложения
 let currentPage = 'cameras';
 
