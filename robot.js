@@ -1,75 +1,55 @@
-// Массив с возможными уведомлениями
-const notifications = [
-    "⚠️ Внимание! Превышен уровень угарного газа.",
-    "🚨 Обнаружена утечка газа! Немедленно проветрите помещение.",
-    "💧 Обнаружена протечка воды! Проверьте сантехнику.",
-    "🌡️ Температура в помещении превышает допустимую норму.",
-    "🔥 Обнаружено задымление! Проверьте источники огня.",
-    "💧 Высокая влажность! Возможна конденсация.",
-];
 
-// Функция для показа уведомления на сайте
-function showOnSiteNotification(message) {
-    const notificationContainer = document.getElementById("notification-container");
+// робот код
+document.addEventListener('DOMContentLoaded', () => {
+    const collectToysCheckbox = document.getElementById('collect-toys');
+    const stayHomeCheckbox = document.getElementById('stay-home');
+    const themeToggle = document.getElementById('theme-toggle');
+    const positionIndicator = document.getElementById('position-indicator');
 
-    // Создаем элемент уведомления
-    const notification = document.createElement("div");
-    notification.className = "notification";
-    notification.textContent = message;
+    // Theme toggle functionality
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('alternative-theme');
+    });
 
-    // Добавляем уведомление в контейнер
-    notificationContainer.appendChild(notification);
+    // Mutual exclusive checkboxes
+    collectToysCheckbox.addEventListener('change', () => {
+        if (collectToysCheckbox.checked) {
+            stayHomeCheckbox.checked = false;
+            moveIndicator('collecting');
+        } else {
+            moveIndicator('idle');
+        }
+    });
 
-    // Удаляем уведомление через 5 секунд
-    setTimeout(() => {
-        notification.remove();
-    }, 5000);
-}
+    stayHomeCheckbox.addEventListener('change', () => {
+        if (stayHomeCheckbox.checked) {
+            collectToysCheckbox.checked = false;
+            moveIndicator('home');
+        } else {
+            moveIndicator('idle');
+        }
+    });
 
-// Функция для показа уведомления вне сайта (через браузер)
-function showBrowserNotification(message) {
-    // Проверяем, поддерживает ли браузер уведомления
-    if (!("Notification" in window)) {
-        console.log("Браузер не поддерживает уведомления.");
-        return;
+    // Position indicator movement
+    function moveIndicator(state) {
+        switch(state) {
+            case 'collecting':
+                positionIndicator.style.top = '30%';
+                positionIndicator.style.right = '40%';
+                break;
+            case 'home':
+                positionIndicator.style.top = '70%';
+                positionIndicator.style.right = '20%';
+                break;
+            case 'idle':
+                positionIndicator.style.top = '50%';
+                positionIndicator.style.right = '20px';
+                break;
+        }
     }
+});
 
-    // Запрашиваем разрешение на показ уведомлений
-    if (Notification.permission === "granted") {
-        // Если разрешение уже есть, показываем уведомление
-        new Notification(message);
-    } else if (Notification.permission !== "denied") {
-        // Если разрешения нет, запрашиваем его
-        Notification.requestPermission().then((permission) => {
-            if (permission === "granted") {
-                new Notification(message);
-            }
-        });
-    }
-}
 
-// Функция для генерации случайного уведомления
-function generateRandomNotification() {
-    const randomIndex = Math.floor(Math.random() * notifications.length);
-    return notifications[randomIndex];
-}
-
-// Функция для отправки уведомлений
-function sendNotification() {
-    const message = generateRandomNotification();
-
-    // Показываем уведомление на сайте
-    showOnSiteNotification(message);
-
-    // Показываем уведомление вне сайта
-    showBrowserNotification(message);
-}
-
-// Запускаем уведомления каждые 2 минуты (120 000 миллисекунд)
-setInterval(sendNotification, 2 * 60 * 1000);
-
-// Первое уведомление при загрузке страницы
-sendNotification();
 
 
 
@@ -172,4 +152,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-

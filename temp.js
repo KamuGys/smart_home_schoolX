@@ -1,75 +1,110 @@
-// Массив с возможными уведомлениями
-const notifications = [
-    "⚠️ Внимание! Превышен уровень угарного газа.",
-    "🚨 Обнаружена утечка газа! Немедленно проветрите помещение.",
-    "💧 Обнаружена протечка воды! Проверьте сантехнику.",
-    "🌡️ Температура в помещении превышает допустимую норму.",
-    "🔥 Обнаружено задымление! Проверьте источники огня.",
-    "💧 Высокая влажность! Возможна конденсация.",
+//датчик температуры код
+
+// Массив цветовых тем
+const themes = [
+    {
+        primary: '#C58C6D',
+        secondary: '#DDBEA9',
+        background: '#F1E3D3',
+        accent: '#B7B7A4',
+        dark: '#6B705C'
+    },
+    {
+        primary: '#6B705C',
+        secondary: '#B7B7A4',
+        background: '#DDBEA9',
+        accent: '#F1E3D3',
+        dark: '#C58C6D'
+    }
 ];
 
-// Функция для показа уведомления на сайте
-function showOnSiteNotification(message) {
-    const notificationContainer = document.getElementById("notification-container");
+let currentTheme = 0;
+let currentTemperature = 4; // Начальный уровень температуры (4 активных блока)
 
-    // Создаем элемент уведомления
-    const notification = document.createElement("div");
-    notification.className = "notification";
-    notification.textContent = message;
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+    updateTemperatureDisplay();
+    setupNavigationButtons();
+    setupTemperatureControls();
+    setupThemeToggle();
+});
 
-    // Добавляем уведомление в контейнер
-    notificationContainer.appendChild(notification);
-
-    // Удаляем уведомление через 5 секунд
-    setTimeout(() => {
-        notification.remove();
-    }, 5000);
-}
-
-// Функция для показа уведомления вне сайта (через браузер)
-function showBrowserNotification(message) {
-    // Проверяем, поддерживает ли браузер уведомления
-    if (!("Notification" in window)) {
-        console.log("Браузер не поддерживает уведомления.");
-        return;
-    }
-
-    // Запрашиваем разрешение на показ уведомлений
-    if (Notification.permission === "granted") {
-        // Если разрешение уже есть, показываем уведомление
-        new Notification(message);
-    } else if (Notification.permission !== "denied") {
-        // Если разрешения нет, запрашиваем его
-        Notification.requestPermission().then((permission) => {
-            if (permission === "granted") {
-                new Notification(message);
-            }
+// Настройка навигационных кнопок
+function setupNavigationButtons() {
+    const navButtons = document.querySelectorAll('.nav-btn');
+    navButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Удаляем активный класс у всех кнопок
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            // Добавляем активный класс нажатой кнопке
+            button.classList.add('active');
+            // Здесь можно добавить логику переключения страниц
         });
-    }
+    });
 }
 
-// Функция для генерации случайного уведомления
-function generateRandomNotification() {
-    const randomIndex = Math.floor(Math.random() * notifications.length);
-    return notifications[randomIndex];
+// Настройка контроля температуры
+function setupTemperatureControls() {
+    const decreaseBtn = document.getElementById('decreaseTemp');
+    const increaseBtn = document.getElementById('increaseTemp');
+
+    decreaseBtn.addEventListener('click', () => {
+        if (currentTemperature > 0) {
+            currentTemperature--;
+            updateTemperatureDisplay();
+        }
+    });
+
+    increaseBtn.addEventListener('click', () => {
+        if (currentTemperature < 8) {
+            currentTemperature++;
+            updateTemperatureDisplay();
+        }
+    });
 }
 
-// Функция для отправки уведомлений
-function sendNotification() {
-    const message = generateRandomNotification();
-
-    // Показываем уведомление на сайте
-    showOnSiteNotification(message);
-
-    // Показываем уведомление вне сайта
-    showBrowserNotification(message);
+// Обновление отображения температуры
+function updateTemperatureDisplay() {
+    const bars = document.querySelectorAll('.temp-bar');
+    bars.forEach((bar, index) => {
+        // Так как шкала отображается справа налево, инвертируем индекс
+        const reverseIndex = bars.length - 1 - index;
+        if (reverseIndex < currentTemperature) {
+            bar.classList.remove('empty');
+        } else {
+            bar.classList.add('empty');
+        }
+    });
 }
 
-// Запускаем уведомления каждые 2 минуты (120 000 миллисекунд)
-setInterval(sendNotification, 2 * 60 * 1000);
+// Настройка переключателя тем
+function setupThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+        currentTheme = (currentTheme + 1) % themes.length;
+        applyTheme(themes[currentTheme]);
+    });
+    // Применяем начальную тему
+    applyTheme(themes[currentTheme]);
+}
 
-// Первое уведомление при загрузке страницы
-sendNotification();
+// Применение темы
+function applyTheme(theme) {
+    document.body.style.backgroundColor = theme.background;
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.style.backgroundColor = theme.secondary;
+    });
+    document.querySelector('.nav-btn.active').style.backgroundColor = theme.primary;
+    document.querySelectorAll('button:not(.nav-btn)').forEach(btn => {
+        btn.style.backgroundColor = theme.accent;
+    });
+    document.getElementById('themeToggle').style.backgroundColor = theme.dark;
+}
+
+
+
+
+
 
 
 
