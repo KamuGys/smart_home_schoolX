@@ -1,3 +1,102 @@
+// /*Галерея*/
+// Массив ссылок на изображения
+const images = [
+    "https://ltdfoto.ru/images/2025/03/18/image1.png",
+    "https://ltdfoto.ru/images/2025/03/18/image2.png",
+    "https://ltdfoto.ru/images/2025/03/18/image3.png",
+    "https://ltdfoto.ru/images/2025/03/18/image4.png",
+    "https://ltdfoto.ru/images/2025/03/18/image5.png",
+    "https://ltdfoto.ru/images/2025/03/18/image6.png",
+    "https://ltdfoto.ru/images/2025/03/18/image7.png",
+    "https://ltdfoto.ru/images/2025/03/18/image8.png",
+    "https://ltdfoto.ru/images/2025/03/18/image9.png",
+    "https://ltdfoto.ru/images/2025/03/18/image10.png"
+];
+
+let currentImageIndex = 0; // Индекс текущего изображения
+
+// Получаем элементы DOM
+const modal = document.getElementById("modal_2");
+const currentImage = document.getElementById("current-image_2");
+const prevButton = document.getElementById("prev-button_2");
+const nextButton = document.getElementById("next-button_2");
+const closeButton = document.querySelector(".close_2");
+
+// Функция для открытия модального окна
+document.getElementById("cnopka_help").addEventListener("click", () => {
+    modal.style.display = "block"; // Показываем окно
+    showImage(currentImageIndex); // Показываем первое изображение
+});
+
+// Функция для закрытия модального окна
+closeButton.addEventListener("click", () => {
+    modal.style.display = "none"; // Скрываем окно
+});
+
+// Функция для показа текущего изображения
+function showImage(index) {
+    currentImage.src = images[index]; // Устанавливаем src изображения
+}
+
+// Перелистывание на предыдущее изображение
+prevButton.addEventListener("click", () => {
+    if (currentImageIndex > 0) {
+        currentImageIndex--;
+    } else {
+        currentImageIndex = images.length - 1; // Переход к последнему изображению
+    }
+    showImage(currentImageIndex);
+});
+
+// Перелистывание на следующее изображение
+nextButton.addEventListener("click", () => {
+    if (currentImageIndex < images.length - 1) {
+        currentImageIndex++;
+    } else {
+        currentImageIndex = 0; // Переход к первому изображению
+    }
+    showImage(currentImageIndex);
+});
+
+// Закрытие окна при клике вне его области
+window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // робот код
 document.addEventListener('DOMContentLoaded', () => {
@@ -48,6 +147,116 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Массив с возможными уведомлениями
+const notifications = [
+    "⚠️ Внимание! Превышен уровень угарного газа.",
+    "🚨 Обнаружена утечка газа! Немедленно проветрите помещение.",
+    "💧 Обнаружена протечка воды! Проверьте сантехнику.",
+    "🌡️ Температура в помещении превышает допустимую норму.",
+    "🔥 Обнаружено задымление! Проверьте источники огня.",
+    "💧 Высокая влажность! Возможна конденсация.",
+];
+
+// Функция для показа уведомления на сайте
+function showOnSiteNotification(message) {
+    const notificationContainer = document.getElementById("notification-container");
+
+    // Создаем элемент уведомления
+    const notification = document.createElement("div");
+    notification.className = "notification";
+    notification.textContent = message;
+
+    // Добавляем уведомление в контейнер
+    notificationContainer.appendChild(notification);
+
+    // Удаляем уведомление через 5 секунд
+    setTimeout(() => {
+        notification.remove();
+    }, 5000);
+}
+
+// Функция для показа уведомления вне сайта (через браузер)
+function showBrowserNotification(message) {
+    // Проверяем, поддерживает ли браузер уведомления
+    if (!("Notification" in window)) {
+        console.log("Браузер не поддерживает уведомления.");
+        return;
+    }
+
+    // Запрашиваем разрешение на показ уведомлений
+    if (Notification.permission === "granted") {
+        // Если разрешение уже есть, показываем уведомление
+        new Notification(message);
+    } else if (Notification.permission !== "denied") {
+        // Если разрешения нет, запрашиваем его
+        Notification.requestPermission().then((permission) => {
+            if (permission === "granted") {
+                new Notification(message);
+            }
+        });
+    }
+}
+
+// Функция для генерации случайного уведомления
+function generateRandomNotification() {
+    const randomIndex = Math.floor(Math.random() * notifications.length);
+    return notifications[randomIndex];
+}
+
+// Функция для отправки уведомлений
+function sendNotification() {
+    const message = generateRandomNotification();
+
+    // Показываем уведомление на сайте
+    showOnSiteNotification(message);
+
+    // Показываем уведомление вне сайта
+    showBrowserNotification(message);
+}
+
+// Запускаем уведомления каждые 2 минуты (120 000 миллисекунд)
+setInterval(sendNotification, 2 * 60 * 1000);
+
+// Первое уведомление при загрузке страницы
+sendNotification();
+
+
 
 
 
@@ -182,7 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
+/*Датчик температуры код*/
 
 
 
@@ -301,79 +510,6 @@ function applyTheme(theme) {
 
 
 
-// смена стиля страницы
-
-// import './mane.css'
-// import javascriptLogo from './javascript.svg'
-// import viteLogo from '/vite.svg'
-//
-// // Create a BroadcastChannel for communication between pages
-// const colorChannel = new BroadcastChannel('colorScheme');
-//
-// // Function to toggle theme
-// function toggleTheme() {
-//     const root = document.documentElement;
-//     const isCustomTheme = root.classList.toggle('custom-theme');
-//
-//     // Broadcast the theme change to other pages
-//     colorChannel.postMessage({ isCustomTheme });
-// }
-//
-// // Listen for messages from other pages
-// colorChannel.onmessage = (event) => {
-//     const root = document.documentElement;
-//     if (event.data.isCustomTheme) {
-//         root.classList.add('custom-theme');
-//     } else {
-//         root.classList.remove('custom-theme');
-//     }
-// };
-//
-// document.querySelector('#app').innerHTML = `
-//   <div>
-//     <a href="https://vitejs.dev" target="_blank">
-//       <img src="${viteLogo}" class="logo" alt="Vite logo" />
-//     </a>
-//     <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-//       <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-//     </a>
-//     <h1>Color Theme Toggle</h1>
-//     <div class="card">
-//       <button id="themeToggle" type="button">Toggle Theme</button>
-//     </div>
-//     <p class="read-the-docs">
-//       Click the button to change the color scheme
-//     </p>
-//   </div>
-// `
-//
-// // Add click event listener to the theme toggle button
-// document.querySelector('#themeToggle').addEventListener('click',)
-//
-//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -446,3 +582,50 @@ document.addEventListener('DOMContentLoaded', function() {
         modalContent.className = 'modal-content ' + savedTheme + '-theme';
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

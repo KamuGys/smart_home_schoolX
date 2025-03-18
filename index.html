@@ -8,59 +8,35 @@
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/2005/2005324.png">
 </head>
 <body>
-<!-- Main container -->
-<div class="container">
-    <!-- Background image -->
-    <div class="background-image"></div>
+<div id="notification-container"></div>
+<button id="theme-toggle" class="theme-toggle">Сменить тему</button>
 
-    <!-- Logo -->
-    <div class="logo">
-        <img src="https://cdn-icons-png.flaticon.com/128/2005/2005324.png" alt="Logo">
-    </div>
+<div class="container_2">
+    <h1>Умный дом для вашей семьи</h1>
 
-    <!-- Login form -->
-    <form id="loginForm" class="login-form">
-        <!-- Username input -->
-        <div class="input-group">
-            <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/user.svg" alt="User icon" class="input-icon">
-            <input
-                    type="text"
-                    id="username"
-                    placeholder="Имя пользователя"
-                    autocomplete="off"
-            >
-        </div>
+    <div class="cards-container">
+        <a href="menu.html" class="card">
+            <div class="card-content" style="background-image: url('https://i.pinimg.com/474x/49/2d/c6/492dc68e43cc2d01793a4bb056226642.jpg')">
+                <img src="https://cdn-icons-png.flaticon.com/128/4407/4407903.png" alt="Датчики" class="icon">
+                <h2>Датчики</h2>
+            </div>
+        </a>
 
-        <!-- Password input -->
-        <div class="input-group">
-            <img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/lock.svg" alt="Lock icon" class="input-icon">
-            <input
-                    type="password"
-                    id="password"
-                    placeholder="Пароль"
-            >
-        </div>
+        <a href="robot.html" class="card">
+            <div class="card-content" style="background-image: url('https://i.pinimg.com/474x/4b/7f/57/4b7f57ed84ca228069de1e2bb223a92e.jpg')">
+                <img src="https://cdn-icons-png.flaticon.com/128/5705/5705176.png" alt="Робот" class="icon">
+                <h2>Робот</h2>
+            </div>
+        </a>
 
-        <!-- Error message -->
-        <div id="errorMessage" class="error-message"></div>
-
-        <!-- Submit button -->
-        <button type="submit" class="submit-button">Начать</button>
-
-        <!-- Create account link -->
-        <a href="selection.html" class="create-account">Создать аккаунт или забыл пароль</a>
-    </form>
-</div>
-
-<!-- Number error modal -->
-<div id="numberErrorModal" class="modal">
-    <div class="modal-content">
-        <h3>Ошибка ввода</h3>
-        <p>Имя пользователя не должно содержать цифры</p>
-        <button onclick="closeModal()" class="modal-button">Понятно</button>
+        <a href="help.html" class="card">
+            <div class="card-content" style="background-image: url('https://i.pinimg.com/originals/89/aa/bb/89aabbd76ebf4fea3fa7bdbff344c40d.webp')">
+                <img src="https://cdn-icons-png.flaticon.com/128/3728/3728607.png" alt="Поддержка" class="icon">
+                <h2>Поддержка</h2>
+            </div>
+        </a>
     </div>
 </div>
-
-<script src="two_mane.js"></script>
+<script src="mane.js"></script>
 </body>
 </html>

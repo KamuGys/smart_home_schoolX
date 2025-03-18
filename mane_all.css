@@ -272,8 +272,9 @@ button {
 
 
 /*Код для климат-контроля*/
+/* Код для климат-контроля */
 /* Секции контроля */
-.rooms-control {
+.climate-control-rooms {
     display: flex;
     justify-content: space-around;
     padding-top: 30px;
@@ -281,25 +282,25 @@ button {
     gap: 0 300px;
 }
 
-.room {
+.climate-control-room {
     text-align: center;
 }
 
 /* Стили для переключателей */
-.switch {
+.climate-switch {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 34px;
 }
 
-.switch input {
+.climate-switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.slider {
+.climate-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -307,11 +308,11 @@ button {
     right: 0;
     bottom: 0;
     background-color: #ccc;
-    transition: .4s;
+    transition: 0.4s;
     border-radius: 34px;
 }
 
-.slider:before {
+.climate-slider:before {
     position: absolute;
     content: "";
     height: 26px;
@@ -319,20 +320,20 @@ button {
     left: 4px;
     bottom: 4px;
     background-color: white;
-    transition: .4s;
+    transition: 0.4s;
     border-radius: 50%;
 }
 
-input:checked + .slider {
+.climate-switch input:checked + .climate-slider {
     background-color: var(--button-bg);
 }
 
-input:checked + .slider:before {
+.climate-switch input:checked + .climate-slider:before {
     transform: translateX(26px);
 }
 
 /* Стили для отображения влажности */
-.humidity-display {
+.climate-humidity-display {
     font-size: 48px;
     text-align: center;
     margin-top: 20px;
@@ -427,13 +428,13 @@ input:checked + .slider:before {
     color: var(--text-color);
 }
 
-.control-item {
+.control-item{
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
     padding: 10px;
-    background-color: var(--bg-color);
+    background-color: #C58C6D;
     border-radius: 5px;
 }
 
@@ -573,6 +574,192 @@ input:checked + .slider:before {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Галерея*/
+
+/* Стили для всплывающего окна */
+.modal_2 {
+    display: none; /* Окно скрыто по умолчанию */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8); /* Полупрозрачный черный фон */
+}
+
+/* Стили для содержимого окна */
+.modal-content_2 {
+    position: relative;
+    background-color: #fff;
+    margin: 5% auto; /* Отступ сверху и снизу 5% */
+    padding: 20px;
+    width: 90%; /* Ширина окна 90% от экрана */
+    height: 90%; /* Высота окна 90% от экрана */
+    max-width: none; /* Убираем ограничение по максимальной ширине */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Стили для кнопки закрытия */
+.close_2 {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #000;
+    z-index: 2; /* Чтобы кнопка была поверх изображения */
+}
+
+/* Стили для контейнера изображения */
+.image-container_2 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Чтобы изображение не выходило за пределы контейнера */
+}
+
+.image-container_2 img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Сохраняет пропорции изображения */
+}
+
+/* Стили для стрелок навигации */
+.navigation_2 {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.navigation_2 button {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+.navigation_2 button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Адаптивный дизайн */
 /*Камеры*/
 @media (max-width: 1024px) {
@@ -677,4 +864,121 @@ input:checked + .slider:before {
         width: 60%;
         height: 30%;
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Окно со светом 2 ползунок*/
+/* Стили для переключателя */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cccccc;
+    transition: .3s;
+    border-radius: 34px;
+}
+
+.switch-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+}
+
+input:checked + .switch-slider {
+    background-color: #C58C6D;
+}
+
+input:checked + .switch-slider:before {
+    transform: translateX(22px);
+}
+
+/* Стили для ползунка яркости */
+.brightness-control {
+    display: none;
+    margin-top: 10px;
+    padding: 0 12px;
+}
+
+.brightness-control.visible {
+    display: block;
+}
+
+.brightness-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: #D1D5DB;
+    outline: none;
+    margin: 10px 0;
+}
+
+.brightness-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #C58C6D;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.brightness-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #bfff00;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.brightness-value {
+    color: var(--text-color);
+    font-size: 14px;
+    text-align: right;
+    margin-top: 5px;
+}
+.content {
+    background-color: #e7ccbc;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 30px;
+    margin-bottom: 20px;
 }

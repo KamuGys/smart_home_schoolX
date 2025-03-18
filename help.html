@@ -10,7 +10,7 @@
 <body>
 
 <div class="button_back">
-    <a href="selection.html"><button class="button_back_1">Главное меню</button></a>
+    <a href="index.html"><button class="button_back_1">Главное меню</button></a>
 </div>
 <!-- Основной контейнер -->
 <div class="container_1">
@@ -21,11 +21,31 @@
         </button>
 
         <!-- Кнопка помощи -->
-        <button class="custom-button_1">
+        <button class="custom-button_1" id="cnopka_help">
             Помощь
         </button>
     </div>
 </div>
+
+<!-- Всплывающее окно -->
+<div id="modal_2" class="modal_2">
+    <div class="modal-content_2">
+        <!-- Кнопка закрытия окна -->
+        <span class="close_2">&times;</span>
+
+        <!-- Контейнер для изображений -->
+        <div class="image-container_2">
+            <img id="current-image_2" src="" alt="Current Image">
+        </div>
+
+        <!-- Стрелки для перелистывания -->
+        <div class="navigation_2">
+            <button id="prev-button_2">&larr;</button>
+            <button id="next-button_2">&rarr;</button>
+        </div>
+    </div>
+</div>
+
 
 <!-- Модальное окно (изначально скрыто) -->
 <div id="smartHomeModal" class="modal_1">
@@ -35,15 +55,13 @@
 
         <!-- Текст об умном доме -->
         <div id="smartHomeText" class="modal-text_1">
-            Умный дом –
+            Умный дом – это набор технологий и устройств, которые делают ваш дом более удобным, безопасным и энергоэффективным. Это система, которая позволяет вам управлять различными устройствами в вашем доме (например, освещением, отоплением, охранной сигнализацией и бытовой техникой) с помощью смартфона, планшета или голосовых команд.
 
             Что входит в систему "Умный дом"?
-            - управление светом в доме и за его пределами
+            - управление светом в доме
             - управление климат-контролем в доме
             - отслеживание показателей датчиков газа и влажности
             - управление сплит системой в доме
-            - климат контроль в доме
-            - управление состоянием робота.
         </div>
     </div>
 </div>

@@ -277,61 +277,139 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /*Меню входа*/
 // Valid credentials list
-const validCredentials = [
-    { username: 'команда', password: 'команда2' }
-];
+// const validCredentials = [
+//     { username: 'команда', password: 'команда2' }
+// ];
+//
+// // DOM elements
+// const loginForm = document.getElementById('loginForm');
+// const usernameInput = document.getElementById('username');
+// const passwordInput = document.getElementById('password');
+// const errorMessage = document.getElementById('errorMessage');
+// const numberErrorModal = document.getElementById('numberErrorModal');
+//
+// // Event listeners
+// loginForm.addEventListener('submit', handleSubmit);
+// usernameInput.addEventListener('input', handleUsernameInput);
+//
+// // Handle username input
+// function handleUsernameInput(e) {
+//     const value = e.target.value;
+//
+//     // Check for numbers in username
+//     if (/\d/.test(value)) {
+//         numberErrorModal.style.display = 'flex';
+//         e.target.value = value.replace(/\d/g, '');
+//     }
+// }
+//
+// // Handle form submission
+// function handleSubmit(e) {
+//     e.preventDefault();
+//
+//     const username = usernameInput.value;
+//     const password = passwordInput.value;
+//
+//     // Validate credentials
+//     const isValid = validCredentials.some(
+//         cred => cred.username === username && cred.password === password
+//     );
+//
+//     if (isValid) {
+//         // Redirect to dashboard
+//         window.location.href = 'selection.html';
+//     } else {
+//         // Show error message
+//         errorMessage.textContent = 'Неверное имя пользователя или пароль';
+//     }
+// }
+//
+// // Close modal
+// function closeModal() {
+//     numberErrorModal.style.display = 'none';
+// }
 
-// DOM elements
-const loginForm = document.getElementById('loginForm');
-const usernameInput = document.getElementById('username');
-const passwordInput = document.getElementById('password');
-const errorMessage = document.getElementById('errorMessage');
-const numberErrorModal = document.getElementById('numberErrorModal');
 
-// Event listeners
-loginForm.addEventListener('submit', handleSubmit);
-usernameInput.addEventListener('input', handleUsernameInput);
 
-// Handle username input
-function handleUsernameInput(e) {
-    const value = e.target.value;
+/*Управление яркостью*/
+// Создаем HTML структуру
+document.querySelector('#app').innerHTML = `
+  <div class="room-control">
+    <h2 class="room-title">Спальная комната:</h2>
+    
+    <!-- Контрол для люстры -->
+    <div class="light-control">
+      <span class="light-name">Люстра</span>
+      <label class="switch">
+        <input type="checkbox" id="chandelier-switch">
+        <span class="switch-slider"></span>
+      </label>
+      <div id="chandelier-brightness" class="brightness-control">
+        <input type="range" min="0" max="100" value="100" class="brightness-slider">
+        <div class="brightness-value">100%</div>
+      </div>
+    </div>
 
-    // Check for numbers in username
-    if (/\d/.test(value)) {
-        numberErrorModal.style.display = 'flex';
-        e.target.value = value.replace(/\d/g, '');
-    }
+    <!-- Контрол для настольной лампы -->
+    <div class="light-control">
+      <span class="light-name">Настольная лампа</span>
+      <label class="switch">
+        <input type="checkbox" id="desk-lamp-switch">
+        <span class="switch-slider"></span>
+      </label>
+      <div id="desk-lamp-brightness" class="brightness-control">
+        <input type="range" min="0" max="100" value="100" class="brightness-slider">
+        <div class="brightness-value">100%</div>
+      </div>
+    </div>
+  </div>
+`
+
+// Функция для настройки управления освещением
+function setupLightControl(switchId, brightnessControlId) {
+    const switchElement = document.getElementById(switchId)
+    const brightnessControl = document.getElementById(brightnessControlId)
+    const slider = brightnessControl.querySelector('.brightness-slider')
+    const valueDisplay = brightnessControl.querySelector('.brightness-value')
+
+    // Обработчик переключателя
+    switchElement.addEventListener('change', () => {
+        brightnessControl.classList.toggle('visible', switchElement.checked)
+
+        // Отправляем состояние на ESP32
+        sendToESP32({
+            device: switchId,
+            state: switchElement.checked,
+            brightness: parseInt(slider.value)
+        })
+    })
+
+    // Обработчик ползунка яркости
+    slider.addEventListener('input', (e) => {
+        const value = e.target.value
+        valueDisplay.textContent = `${value}%`
+
+        // Отправляем значение яркости на ESP32
+        if (switchElement.checked) {
+            sendToESP32({
+                device: switchId,
+                state: true,
+                brightness: parseInt(value)
+            })
+        }
+    })
 }
 
-// Handle form submission
-function handleSubmit(e) {
-    e.preventDefault();
-
-    const username = usernameInput.value;
-    const password = passwordInput.value;
-
-    // Validate credentials
-    const isValid = validCredentials.some(
-        cred => cred.username === username && cred.password === password
-    );
-
-    if (isValid) {
-        // Redirect to dashboard
-        window.location.href = 'selection.html';
-    } else {
-        // Show error message
-        errorMessage.textContent = 'Неверное имя пользователя или пароль';
-    }
+// Функция для отправки данных на ESP32
+function sendToESP32(data) {
+    // Здесь должен быть код для отправки данных на ESP32
+    // Например, через WebSocket или HTTP запрос
+    console.log('Отправка на ESP32:', data)
 }
 
-// Close modal
-function closeModal() {
-    numberErrorModal.style.display = 'none';
-}
-
-
-
-
+// Инициализация контролов
+setupLightControl('chandelier-switch', 'chandelier-brightness')
+setupLightControl('desk-lamp-switch', 'desk-lamp-brightness')
 
 
 
