@@ -1,3 +1,6 @@
+<script type="module" src="clim_c.js"></script>
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -6,6 +9,7 @@
     <title>Умный дом для вашей семьи</title>
     <link rel="stylesheet" href="mane_all.css">
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/2005/2005324.png">
+
 </head>
 <body>
 
@@ -53,14 +57,18 @@
     </section>
 
     <!-- Секция датчика влажности -->
+    <!-- Секция датчика влажности -->
     <section class="humidity-section">
         <h2>Датчик влажности:</h2>
+        <script src="clim_c.js"></script>
         <div class="humidity-display">
-            <span id="humidity-value">50</span>%
+            <span id="humidity-value">--</span>%
         </div>
     </section>
-</main>
 
-<script src="two_mane.js"></script>
+
+    <!-- Подключение вашего JavaScript-файла -->
+    <script src="clim_c.js"></script>
+</main>
 </body>
-</html>
+</html> 
